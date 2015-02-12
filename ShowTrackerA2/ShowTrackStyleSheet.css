@@ -1,0 +1,14 @@
+﻿body {
+}
+table tr th {
+    background-color:silver;
+    border:solid 3px black;
+    padding-left:4px;
+    padding-right:4px;
+}
+
+table tr td {
+    border:solid 3px black;
+    padding-left:4px;
+    padding-right:4px;
+}

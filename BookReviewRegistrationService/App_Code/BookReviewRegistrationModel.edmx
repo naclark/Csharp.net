@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BookReviewDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CheckinLog">
+          <Key>
+            <PropertyRef Name="CheckInLogKey" />
+          </Key>
+          <Property Name="CheckInLogKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReviewerKey" Type="int" Nullable="false" />
+          <Property Name="CheckinDateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reviewer">
+          <Key>
+            <PropertyRef Name="ReviewerKey" />
+          </Key>
+          <Property Name="ReviewerKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReviewerUserName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ReviewerFirstName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ReviewerLastName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ReviewerEmail" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ReviewerKeyCode" Type="int" Nullable="false" />
+          <Property Name="ReviewPlainPassword" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ReviewerHashedPass" Type="varbinary" MaxLength="500" Nullable="false" />
+          <Property Name="ReviewerDateEntered" Type="date" />
+        </EntityType>
+        <Association Name="FK_ReviewerCheckIn">
+          <End Role="Reviewer" Type="Self.Reviewer" Multiplicity="1" />
+          <End Role="CheckinLog" Type="Self.CheckinLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reviewer">
+              <PropertyRef Name="ReviewerKey" />
+            </Principal>
+            <Dependent Role="CheckinLog">
+              <PropertyRef Name="ReviewerKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookReviewDbModelStoreContainer">
+          <EntitySet Name="CheckinLog" EntityType="Self.CheckinLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reviewer" EntityType="Self.Reviewer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ReviewerCheckIn" Association="Self.FK_ReviewerCheckIn">
+            <End Role="Reviewer" EntitySet="Reviewer" />
+            <End Role="CheckinLog" EntitySet="CheckinLog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookReviewDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CheckinLog">
+          <Key>
+            <PropertyRef Name="CheckInLogKey" />
+          </Key>
+          <Property Name="CheckInLogKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReviewerKey" Type="Int32" Nullable="false" />
+          <Property Name="CheckinDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Reviewer" Relationship="Self.FK_ReviewerCheckIn" FromRole="CheckinLog" ToRole="Reviewer" />
+        </EntityType>
+        <EntityType Name="Reviewer">
+          <Key>
+            <PropertyRef Name="ReviewerKey" />
+          </Key>
+          <Property Name="ReviewerKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReviewerUserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReviewerFirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ReviewerLastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReviewerEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReviewerKeyCode" Type="Int32" Nullable="false" />
+          <Property Name="ReviewPlainPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReviewerHashedPass" Type="Binary" MaxLength="500" FixedLength="false" Nullable="false" />
+          <Property Name="ReviewerDateEntered" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CheckinLogs" Relationship="Self.FK_ReviewerCheckIn" FromRole="Reviewer" ToRole="CheckinLog" />
+        </EntityType>
+        <Association Name="FK_ReviewerCheckIn">
+          <End Role="Reviewer" Type="Self.Reviewer" Multiplicity="1" />
+          <End Role="CheckinLog" Type="Self.CheckinLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reviewer">
+              <PropertyRef Name="ReviewerKey" />
+            </Principal>
+            <Dependent Role="CheckinLog">
+              <PropertyRef Name="ReviewerKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookReviewDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CheckinLogs" EntityType="Self.CheckinLog" />
+          <EntitySet Name="Reviewers" EntityType="Self.Reviewer" />
+          <AssociationSet Name="FK_ReviewerCheckIn" Association="Self.FK_ReviewerCheckIn">
+            <End Role="Reviewer" EntitySet="Reviewers" />
+            <End Role="CheckinLog" EntitySet="CheckinLogs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookReviewDbModelStoreContainer" CdmEntityContainer="BookReviewDbEntities">
+          <EntitySetMapping Name="CheckinLogs">
+            <EntityTypeMapping TypeName="BookReviewDbModel.CheckinLog">
+              <MappingFragment StoreEntitySet="CheckinLog">
+                <ScalarProperty Name="CheckInLogKey" ColumnName="CheckInLogKey" />
+                <ScalarProperty Name="ReviewerKey" ColumnName="ReviewerKey" />
+                <ScalarProperty Name="CheckinDateTime" ColumnName="CheckinDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviewers">
+            <EntityTypeMapping TypeName="BookReviewDbModel.Reviewer">
+              <MappingFragment StoreEntitySet="Reviewer">
+                <ScalarProperty Name="ReviewerKey" ColumnName="ReviewerKey" />
+                <ScalarProperty Name="ReviewerUserName" ColumnName="ReviewerUserName" />
+                <ScalarProperty Name="ReviewerFirstName" ColumnName="ReviewerFirstName" />
+                <ScalarProperty Name="ReviewerLastName" ColumnName="ReviewerLastName" />
+                <ScalarProperty Name="ReviewerEmail" ColumnName="ReviewerEmail" />
+                <ScalarProperty Name="ReviewerKeyCode" ColumnName="ReviewerKeyCode" />
+                <ScalarProperty Name="ReviewPlainPassword" ColumnName="ReviewPlainPassword" />
+                <ScalarProperty Name="ReviewerHashedPass" ColumnName="ReviewerHashedPass" />
+                <ScalarProperty Name="ReviewerDateEntered" ColumnName="ReviewerDateEntered" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
