@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ShowTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LoginHistory">
+          <Key>
+            <PropertyRef Name="LoginHistorykey" />
+          </Key>
+          <Property Name="LoginHistorykey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LoginHistoryDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="VenueKey" />
+          </Key>
+          <Property Name="VenueKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VenueName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="VenueAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="VenueCity" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="VenueState" Type="nchar" MaxLength="2" Nullable="false" />
+          <Property Name="VenueZipCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="VenuePhone" Type="nchar" MaxLength="13" Nullable="false" />
+          <Property Name="VenueEmail" Type="nvarchar" MaxLength="255" />
+          <Property Name="VenueWebPage" Type="nvarchar" MaxLength="255" />
+          <Property Name="VenueAgeRestriction" Type="int" />
+          <Property Name="VenueDateAdded" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VenueLogin">
+          <Key>
+            <PropertyRef Name="VenueLoginKey" />
+          </Key>
+          <Property Name="VenueLoginKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VenueKey" Type="int" />
+          <Property Name="VenueLoginUserName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="VenueLoginPasswordPlain" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="VenueLoginRandom" Type="int" Nullable="false" />
+          <Property Name="VenueLoginHashed" Type="varbinary" MaxLength="500" />
+          <Property Name="VenueLoginDateAdded" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__VenueLogi__Venue__35BCFE0A">
+          <End Role="Venue" Type="Self.Venue" Multiplicity="0..1" />
+          <End Role="VenueLogin" Type="Self.VenueLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueKey" />
+            </Principal>
+            <Dependent Role="VenueLogin">
+              <PropertyRef Name="VenueKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShowTrackerModelStoreContainer">
+          <EntitySet Name="LoginHistory" EntityType="Self.LoginHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VenueLogin" EntityType="Self.VenueLogin" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__VenueLogi__Venue__35BCFE0A" Association="Self.FK__VenueLogi__Venue__35BCFE0A">
+            <End Role="Venue" EntitySet="Venue" />
+            <End Role="VenueLogin" EntitySet="VenueLogin" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ShowTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LoginHistory">
+          <Key>
+            <PropertyRef Name="LoginHistorykey" />
+          </Key>
+          <Property Name="LoginHistorykey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoginHistoryDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="VenueKey" />
+          </Key>
+          <Property Name="VenueKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VenueName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VenueAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VenueCity" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VenueState" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="VenueZipCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="VenuePhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="VenueEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="VenueWebPage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="VenueAgeRestriction" Type="Int32" />
+          <Property Name="VenueDateAdded" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VenueLogins" Relationship="Self.FK__VenueLogi__Venue__35BCFE0A" FromRole="Venue" ToRole="VenueLogin" />
+        </EntityType>
+        <EntityType Name="VenueLogin">
+          <Key>
+            <PropertyRef Name="VenueLoginKey" />
+          </Key>
+          <Property Name="VenueLoginKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VenueKey" Type="Int32" />
+          <Property Name="VenueLoginUserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VenueLoginPasswordPlain" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VenueLoginRandom" Type="Int32" Nullable="false" />
+          <Property Name="VenueLoginHashed" Type="Binary" MaxLength="500" FixedLength="false" />
+          <Property Name="VenueLoginDateAdded" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Venue" Relationship="Self.FK__VenueLogi__Venue__35BCFE0A" FromRole="VenueLogin" ToRole="Venue" />
+        </EntityType>
+        <Association Name="FK__VenueLogi__Venue__35BCFE0A">
+          <End Role="Venue" Type="Self.Venue" Multiplicity="0..1" />
+          <End Role="VenueLogin" Type="Self.VenueLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueKey" />
+            </Principal>
+            <Dependent Role="VenueLogin">
+              <PropertyRef Name="VenueKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ShowTrackerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LoginHistories" EntityType="Self.LoginHistory" />
+          <EntitySet Name="Venues" EntityType="Self.Venue" />
+          <EntitySet Name="VenueLogins" EntityType="Self.VenueLogin" />
+          <AssociationSet Name="FK__VenueLogi__Venue__35BCFE0A" Association="Self.FK__VenueLogi__Venue__35BCFE0A">
+            <End Role="Venue" EntitySet="Venues" />
+            <End Role="VenueLogin" EntitySet="VenueLogins" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ShowTrackerModelStoreContainer" CdmEntityContainer="ShowTrackerEntities">
+          <EntitySetMapping Name="LoginHistories">
+            <EntityTypeMapping TypeName="ShowTrackerModel.LoginHistory">
+              <MappingFragment StoreEntitySet="LoginHistory">
+                <ScalarProperty Name="LoginHistorykey" ColumnName="LoginHistorykey" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoginHistoryDateTime" ColumnName="LoginHistoryDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Venues">
+            <EntityTypeMapping TypeName="ShowTrackerModel.Venue">
+              <MappingFragment StoreEntitySet="Venue">
+                <ScalarProperty Name="VenueKey" ColumnName="VenueKey" />
+                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
+                <ScalarProperty Name="VenueAddress" ColumnName="VenueAddress" />
+                <ScalarProperty Name="VenueCity" ColumnName="VenueCity" />
+                <ScalarProperty Name="VenueState" ColumnName="VenueState" />
+                <ScalarProperty Name="VenueZipCode" ColumnName="VenueZipCode" />
+                <ScalarProperty Name="VenuePhone" ColumnName="VenuePhone" />
+                <ScalarProperty Name="VenueEmail" ColumnName="VenueEmail" />
+                <ScalarProperty Name="VenueWebPage" ColumnName="VenueWebPage" />
+                <ScalarProperty Name="VenueAgeRestriction" ColumnName="VenueAgeRestriction" />
+                <ScalarProperty Name="VenueDateAdded" ColumnName="VenueDateAdded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VenueLogins">
+            <EntityTypeMapping TypeName="ShowTrackerModel.VenueLogin">
+              <MappingFragment StoreEntitySet="VenueLogin">
+                <ScalarProperty Name="VenueLoginKey" ColumnName="VenueLoginKey" />
+                <ScalarProperty Name="VenueKey" ColumnName="VenueKey" />
+                <ScalarProperty Name="VenueLoginUserName" ColumnName="VenueLoginUserName" />
+                <ScalarProperty Name="VenueLoginPasswordPlain" ColumnName="VenueLoginPasswordPlain" />
+                <ScalarProperty Name="VenueLoginRandom" ColumnName="VenueLoginRandom" />
+                <ScalarProperty Name="VenueLoginHashed" ColumnName="VenueLoginHashed" />
+                <ScalarProperty Name="VenueLoginDateAdded" ColumnName="VenueLoginDateAdded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
