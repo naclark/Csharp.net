@@ -16,7 +16,7 @@ public interface INewShowService
     bool AddShow(Show s, ShowDetail sd);
 
     [OperationContract]
-    List<string> GetArtists();
+    List<Artist> GetArtists();
 
     [OperationContract]
     List<string> GetGenres();

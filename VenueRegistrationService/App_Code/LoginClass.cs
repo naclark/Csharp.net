@@ -34,7 +34,7 @@ public class LoginClass
         //query the fields
         var info = from i in ste.VenueLogins
                    where i.VenueLoginUserName.Equals(username)
-                   select new { i.VenueLoginKey, i.VenueLoginHashed, i.VenueLoginRandom };
+                   select new { i.VenueKey, i.VenueLoginHashed, i.VenueLoginRandom };
 
         //loop through the results and assign the
         //values to the field variables
@@ -42,7 +42,7 @@ public class LoginClass
         {
             seed = u.VenueLoginRandom;
             dbhash = u.VenueLoginHashed;
-            key = u.VenueLoginKey;
+            key = (int)u.VenueKey;
         }
     }
 

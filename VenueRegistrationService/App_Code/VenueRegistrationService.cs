@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
-// NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "VenueRegistrationService" in code, svc and config file together.
 public class VenueRegistrationService : IVenueRegistrationService
 {
     ShowTrackerEntities ste = new ShowTrackerEntities();
@@ -40,9 +39,8 @@ public class VenueRegistrationService : IVenueRegistrationService
             ste.VenueLogins.Add(vlg);
             ste.SaveChanges();
         }
-        catch (Exception ex)
+        catch
         {
-            Console.WriteLine(ex.ToString());
             result = false;
         }
         return result;

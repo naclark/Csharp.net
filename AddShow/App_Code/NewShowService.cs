@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Data.Entity.Validation;
 
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "NewShowService" in code, svc and config file together.
 public class NewShowService : INewShowService
@@ -34,8 +35,8 @@ public class NewShowService : INewShowService
     public bool AddShow(Show s, ShowDetail sd)
     {
         bool result = true;
-        try
-        {
+        //try
+        //{
             int key;
             Show sh = new Show();
             ShowDetail shd = new ShowDetail();
@@ -45,7 +46,7 @@ public class NewShowService : INewShowService
             }
             else
             {
-                key = (int)sd.ArtistKey;
+                key = int.Parse(sd.ArtistKey.ToString());
             }
             sh.VenueKey = s.VenueKey;
             shd.ArtistKey = key;
@@ -55,28 +56,44 @@ public class NewShowService : INewShowService
             sh.ShowTime = s.ShowTime;
             sh.ShowDateEntered = DateTime.Now;
             ste.Shows.Add(sh);
+            ste.SaveChanges();
+            shd.ShowKey = sh.ShowKey;
             shd.ShowDetailAdditional = sd.ShowDetailAdditional;
             shd.ShowDetailArtistStartTime = sd.ShowDetailArtistStartTime;
-            shd.Show = sh;
             ste.ShowDetails.Add(shd);
             ste.SaveChanges();
-        }
-        catch
-        {
-            result = false;
-        }
+        //}
+
+        //catch //(System.Data.Entity.Validation.DbEntityValidationException e)
+        //{
+            /*foreach (var eve in e.EntityValidationErrors)
+            {
+                Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                    eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                foreach (var ve in eve.ValidationErrors)
+                {
+                    Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                        ve.PropertyName, ve.ErrorMessage);
+                }
+            }*/
+        //    result = false;
+        //}
         return result;
     }
 
-    public List<string> GetArtists()
+    public List<Artist> GetArtists()
     {
         var arts = from a in ste.Artists
                    orderby a.ArtistName
-                   select new { a.ArtistName };
-        List<string> artists = new List<string>();
+                   select a;
+        List<Artist> artists = new List<Artist>();
         foreach (var a in arts)
         {
-            artists.Add(a.ArtistName);
+            Artist ar = new Artist();
+            ar.ArtistKey = a.ArtistKey;
+            ar.ArtistName = a.ArtistName;
+            ar.ArtistEmail = a.ArtistEmail;
+            artists.Add(ar);
         }
         return artists;
     }
