@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="898e0df0fabc4bedabfa7bb84d9c4a46" Name="Diagram1" >
+        <EntityTypeShape EntityType="ShowSearchModel.Artist" Width="1.5" PointX="0.75" PointY="4.875" />
+        <EntityTypeShape EntityType="ShowSearchModel.Fan" Width="1.5" PointX="3" PointY="10.875" />
+        <EntityTypeShape EntityType="ShowSearchModel.Genre" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="ShowSearchModel.Show" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ShowSearchModel.ShowDetail" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="ShowSearchModel.Venue" Width="1.5" PointX="1.5" PointY="14.25" />
+        <AssociationConnector Association="ShowSearchModel.FK__ShowDetai__Artis__1B0907CE" />
+        <AssociationConnector Association="ShowSearchModel.FK__Show__VenueKey__164452B1" />
+        <AssociationConnector Association="ShowSearchModel.FK__ShowDetai__ShowK__1A14E395" />
+        <AssociationConnector Association="ShowSearchModel.ArtistGenre" />
+        <AssociationConnector Association="ShowSearchModel.FanArtist" />
+        <AssociationConnector Association="ShowSearchModel.FanGenre" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,15 @@
+﻿body {
+    font-family:Verdana, sans-serif;
+}
+.login
+{
+    background-color:Navy;
+    color:white;
+    border:solid 2px black;
+}
+h1 {
+    color:navy;
+}
+#lblResult {
+    color:red;
+}
